@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX SPORT — Tienda Deportiva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #f5f4f0;
+      --accent: #e8ff00;
+      --accent2: #ff3c1e;
+      --gray: #1c1c1c;
+      --gray2: #2a2a2a;
+      --gray3: #444;
+      --text-muted: #888;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1f1f1f;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #cart-btn {
+      position: relative;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #cart-btn:hover { background: #d4eb00; transform: scale(1.03); }
+
+    #cart-count {
+      background: var(--accent2);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      margin-top: 64px;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 50%, #1a1a0a 0%, transparent 70%),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,0.012) 40px,
+          rgba(255,255,255,0.012) 41px
+        );
+      z-index: 0;
+    }
+
+    .hero-accent-line {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 42%;
+      background: linear-gradient(135deg, #1c1c00 0%, #2b2b00 100%);
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--accent2);
+      color: #fff;
+      padding: 1rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .hero-cta:hover { background: #d93419; transform: translateX(4px); }
+
+    .hero-stats {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      z-index: 2;
+    }
+
+    .hero-stat { text-align: right; }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .section-title span { color: var(--accent); }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== CATEGORIES ===== */
+    .categories-section {
+      padding: 5rem 2rem;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #1f1f1f;
+    }
+
+    .category-card {
+      background: var(--gray);
+      padding: 2.5rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border: 2px solid transparent;
+    }
+
+    .category-card.active, .category-card:hover {
+      background: var(--gray2);
+      border-color: var(--accent);
+    }
+
+    .category-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .category-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .category-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== PRODUCTS ===== */
+    .products-section {
+      padding: 5rem 2rem;
+      background: #0a0a0a;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      background: transparent;
+      border: 1px solid var(--gray3);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232,255,0,0.05);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--gray);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover { transform: translateY(-4px); }
+
+    .product-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 2;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+    }
+
+    .badge-new { background: var(--accent); color: var(--black); }
+    .badge-sale { background: var(--accent2); color: #fff; }
+    .badge-popular { background: #333; color: var(--white); }
+
+    .product-img {
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      background: var(--gray2);
+      border-bottom: 1px solid #252525;
+      position: relative;
+    }
+
+    .product-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 60%, rgba(232,255,0,0.04) 0%, transparent 70%);
+    }
+
+    .product-info {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-category {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .product-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--white);
+    }
+
+    .product-price-old {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .add-to-cart {
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 0.6rem 1rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .add-to-cart:hover { background: #d4eb00; transform: scale(1.04); }
+    .add-to-cart:active { transform: scale(0.97); }
+
+    /* ===== PROMO BANNER ===== */
+    .promo-banner {
+      background: var(--accent2);
+      padding: 4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .promo-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: #fff;
+    }
+
+    .promo-text p {
+      color: rgba(255,255,255,0.8);
+      margin-top: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .promo-cta {
+      display: inline-block;
+      background: #fff;
+      color: var(--accent2);
+      padding: 1rem 2.5rem;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s;
+      white-space: nowrap;
+    }
+
+    .promo-cta:hover { transform: scale(1.04); }
+
+    /* ===== CART DRAWER ===== */
+    .cart-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      backdrop-filter: blur(4px);
+    }
+
+    .cart-overlay.open { display: block; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -480px;
+      width: 440px;
+      max-width: 95vw;
+      height: 100%;
+      background: #111;
+      border-left: 1px solid #222;
+      z-index: 2001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .cart-drawer.open { right: 0; }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+      border-bottom: 1px solid #222;
+    }
+
+    .cart-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    #close-cart {
+      background: none;
+      border: 1px solid #333;
+      color: var(--white);
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+
+    #close-cart:hover { border-color: var(--accent); color: var(--accent); }
+
+    #cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-muted);
+    }
+
+    .cart-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid #1f1f1f;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(16px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .cart-item-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gray2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .cart-item-info { flex: 1; }
+
+    .cart-item-cat {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin: 0.2rem 0;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .cart-item-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid #333;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      background: none;
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .qty-btn:hover { background: #222; }
+
+    .qty-num {
+      width: 32px;
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-left: 1px solid #333;
+      border-right: 1px solid #333;
+      padding: 2px 0;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+
+    .remove-btn:hover { color: var(--accent2); }
+
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #222;
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .cart-total-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .cart-total-amount {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    #checkout-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 1rem;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 0.75rem;
+    }
+
+    #checkout-btn:hover { background: #d4eb00; transform: scale(1.02); }
+
+    #clear-cart {
+      width: 100%;
+      background: none;
+      border: 1px solid #333;
+      color: var(--text-muted);
+      padding: 0.6rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #clear-cart:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #060606;
+      border-top: 1px solid #1a1a1a;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand-name span { color: var(--accent); }
+
+    .footer-desc {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-col ul li a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      border-top: 1px solid #1a1a1a;
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent);
+      color: var(--black);
+      padding: 0.75rem 1.5rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 9999;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { display: none; }
+      .hero-accent-line { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a class="nav-logo" href="#"><span>APEX</span> SPORT</a>
+    <ul class="nav-links">
+      <li><a href="#categorias">Categorías</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#ofertas">Ofertas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="cart-btn" onclick="toggleCart()">
+        🛒 Carrito
+        <span id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-accent-line"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Nueva Temporada 2026</div>
+      <h1>Rinde<em>Al Máximo</em></h1>
+      <p class="hero-desc">Equipamiento deportivo de alta performance para atletas que no conocen límites. Encuentra todo lo que necesitas para cada deporte.</p>
+      <a class="hero-cta" href="#productos">Ver Productos →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">500+</div>
+        <div class="hero-stat-label">Productos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">20+</div>
+        <div class="hero-stat-label">Deportes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Satisfacción</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories-section" id="categorias">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Categ<span>oría</span>s</div>
+      </div>
+      <div class="section-subtitle">Filtra por deporte</div>
+    </div>
+    <div class="categories-grid" id="categories-grid">
+      <div class="category-card active" onclick="filterCategory('todos')">
+        <div class="category-icon">🏆</div>
+        <div class="category-name">Todos</div>
+        <div class="category-count">24 productos</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('futbol')">
+        <div class="category-icon">⚽</div>
+        <div class="category-name">Fútbol</div>
+        <div class="category-count">6 productos</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('running')">
+        <div class="category-icon">🏃</div>
+        <div class="category-name">Running</div>
+        <div class="category-count">5 productos</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('gym')">
+        <div class="category-icon">🏋️</div>
+        <div class="category-name">Gym & Fitness</div>
+        <div class="category-count">5 productos</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('natacion')">
+        <div class="category-icon">🏊</div>
+        <div class="category-name">Natación</div>
+        <div class="category-count">4 productos</div>
+      </div>
+      <div class="category-card" onclick="filterCategory('basket')">
+        <div class="category-icon">🏀</div>
+        <div class="category-name">Basketball</div>
+        <div class="category-count">4 productos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="productos">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Nuestros<span> Productos</span></div>
+      </div>
+      <div class="section-subtitle" id="product-count">24 resultados</div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="sortProducts('todos', this)">Todo</button>
+      <button class="filter-btn" onclick="sortProducts('nuevo', this)">Nuevos</button>
+      <button class="filter-btn" onclick="sortProducts('oferta', this)">En Oferta</button>
+      <button class="filter-btn" onclick="sortProducts('precio-asc', this)">Precio ↑</button>
+      <button class="filter-btn" onclick="sortProducts('precio-desc', this)">Precio ↓</button>
+    </div>
+
+    <div class="products-grid" id="products-grid"></div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <section class="promo-banner" id="ofertas">
+    <div class="promo-text">
+      <h2>Hasta 30%<br>de descuento</h2>
+      <p>En artículos seleccionados de futbol</p>
+    </div>
+    <a class="promo-cta" href="#productos" onclick="sortProducts('oferta', document.querySelector('.filter-btn'))">Ver Ofertas →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contacto">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name"><span>APEX</span> SPORT</div>
+        <p class="footer-desc">Tu tienda deportiva de confianza. Equipamiento profesional para todos los niveles y disciplinas deportivas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Deportes</h4>
+        <ul>
+          <li><a href="#">Fútbol</a></li>
+          <li><a href="#">Running</a></li>
+          <li><a href="#">Gym & Fitness</a></li>
+          <li><a href="#">Natación</a></li>
+          <li><a href="#">Basketball</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Nosotros</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Carreras</a></li>
+          <li><a href="#">Prensa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Soporte</h4>
+        <ul>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Tallas</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 APEX SPORT — Todos los derechos reservados</span>
+      <span>Hecho con 💛 para atletas</span>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h2>Tu Carrito</h2>
+      <button id="close-cart" onclick="toggleCart()">✕</button>
+    </div>
+    <div id="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-amount" id="cart-total">$0.00</span>
+      </div>
+      <button id="checkout-btn">Pagar Ahora →</button>
+      <button id="clear-cart" onclick="clearCart()">Vaciar Carrito</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const products = [
+      { id:1, name:'Balón Pro 5', category:'futbol', price:49.99, icon:'⚽', badge:'popular', desc:'Balón oficial de cuero PU, costuras reforzadas, para todo terreno.' },
+      { id:2, name:'Botines Elite', category:'futbol', price:129.99, oldPrice:179.99, icon:'👟', badge:'sale', desc:'Suela de tracción multidireccional, horma anatómica profesional.' },
+      { id:3, name:'Canilleras Flex', category:'futbol', price:24.99, icon:'🦵', badge:'nuevo', desc:'EVA de alta densidad con velcro ajustable, certificadas FIFA.' },
+      { id:4, name:'Guantes Portero', category:'futbol', price:59.99, icon:'🧤', badge:'popular', desc:'Látex alemán 3mm, corte negativo, protectores de dedo.' },
+      { id:5, name:'Camiseta Dry-Fit', category:'futbol', price:34.99, icon:'👕', badge:'nuevo', desc:'Tecnología moisture-wicking, 100% poliéster reciclado.' },
+      { id:6, name:'Malla Entrenamiento', category:'futbol', price:18.99, icon:'🥅', badge:null, desc:'Malla de entrenamiento resistente, monta en minutos.' },
+
+      { id:7, name:'Zapatillas Air Run', category:'running', price:149.99, oldPrice:199.99, icon:'👟', badge:'sale', desc:'Foam reactivo, drop 8mm, suela de goma Continental.' },
+      { id:8, name:'Calcetines Compresión', category:'running', price:19.99, icon:'🧦', badge:'nuevo', desc:'Compresión graduada, antiampollas, tejido antibacterial.' },
+      { id:9, name:'Camiseta Aerodry', category:'running', price:44.99, icon:'👕', badge:'popular', desc:'Ultra liviana 95g, reflectivos 360°, cuello ergonómico.' },
+      { id:10, name:'Mochila Run 10L', category:'running', price:69.99, icon:'🎒', badge:null, desc:'10L, softflask incluido, bolsillos elásticos laterales.' },
+      { id:11, name:'Reloj GPS Sport', category:'running', price:199.99, icon:'⌚', badge:'nuevo', desc:'GPS multibanda, frecuencia cardíaca óptica, 20h batería.' },
+
+      { id:12, name:'Mancuernas 10kg', category:'gym', price:39.99, icon:'💪', badge:'popular', desc:'Hierro fundido recubierto de vinilo, grip antideslizante.' },
+      { id:13, name:'Barra Olímpica 20kg', category:'gym', price:149.99, icon:'🏋️', badge:'nuevo', desc:'Acero reforzado 185,000 PSI, collar de giro dual.' },
+      { id:14, name:'Mat Yoga Pro', category:'gym', price:54.99, oldPrice:74.99, icon:'🧘', badge:'sale', desc:'6mm de grosor, caucho natural antideslizante, marcas de alineación.' },
+      { id:15, name:'Guantes Gym', category:'gym', price:22.99, icon:'🥊', badge:null, desc:'Cuero sintético, ventilación perforada, muñequera integrada.' },
+      { id:16, name:'Cuerda Saltar Speed', category:'gym', price:14.99, icon:'🪢', badge:'nuevo', desc:'Rodamientos de bolas, cable de acero PVC, handles ergonómicos.' },
+
+      { id:17, name:'Gafas Swim Pro', category:'natacion', price:29.99, icon:'🥽', badge:'popular', desc:'Lente espejo UV400, silicona doble sello, antivaho.' },
+      { id:18, name:'Gorro Silicona', category:'natacion', price:12.99, icon:'🧢', badge:null, desc:'Silicona elástica resistente al cloro, talla única adulto.' },
+      { id:19, name:'Traje Baño Competición', category:'natacion', price:79.99, oldPrice:109.99, icon:'🩱', badge:'sale', desc:'Tejido compresivo XTRA LIFE™, costura plana sin fricción.' },
+      { id:20, name:'Paletas de Mano', category:'natacion', price:18.99, icon:'🏊', badge:'nuevo', desc:'Polipropileno resistente, ajuste ergonómico, 3 tamaños.' },
+
+      { id:21, name:'Pelota NBA Official', category:'basket', price:89.99, icon:'🏀', badge:'popular', desc:'Cuero Spalding full-grain, 29.5" circunferencia oficial.' },
+      { id:22, name:'Zapatillas Court', category:'basket', price:119.99, oldPrice:159.99, icon:'👟', badge:'sale', desc:'Soporte lateral máximo, amortiguación de impacto, grip herringbone.' },
+      { id:23, name:'Aro Portátil', category:'basket', price:199.99, icon:'🎯', badge:'nuevo', desc:'Altura regulable 1.5–3m, base lastrable, breakaway rim.' },
+      { id:24, name:'Rodilleras Basket', category:'basket', price:27.99, icon:'🦵', badge:null, desc:'Compresión 4-way stretch, almohadillas de gel, talla S-XL.' },
+    ];
+
+    let cart = [];
+    let currentCategory = 'todos';
+    let currentSort = 'todos';
+
+    function getFiltered() {
+      let list = currentCategory === 'todos' ? [...products] : products.filter(p => p.category === currentCategory);
+      if (currentSort === 'nuevo') list = list.filter(p => p.badge === 'nuevo');
+      if (currentSort === 'oferta') list = list.filter(p => p.badge === 'sale');
+      if (currentSort === 'precio-asc') list.sort((a,b) => a.price - b.price);
+      if (currentSort === 'precio-desc') list.sort((a,b) => b.price - a.price);
+      return list;
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const list = getFiltered();
+      document.getElementById('product-count').textContent = list.length + ' resultado' + (list.length !== 1 ? 's' : '');
+      grid.innerHTML = list.map(p => `
+        <div class="product-card">
+          ${p.badge ? `<div class="product-badge badge-${p.badge}">${p.badge === 'nuevo' ? 'Nuevo' : p.badge === 'sale' ? 'Oferta' : 'Popular'}</div>` : ''}
+          <div class="product-img">${p.icon}</div>
+          <div class="product-info">
+            <div class="product-category">${catLabel(p.category)}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.desc}</div>
+            <div class="product-footer">
+              <div>
+                <div class="product-price">$${p.price.toFixed(2)}</div>
+                ${p.oldPrice ? `<div class="product-price-old">$${p.oldPrice.toFixed(2)}</div>` : ''}
+              </div>
+              <button class="add-to-cart" onclick="addToCart(${p.id})">+ Añadir</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function catLabel(cat) {
+      const labels = { futbol:'Fútbol', running:'Running', gym:'Gym & Fitness', natacion:'Natación', basket:'Basketball' };
+      return labels[cat] || cat;
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.category-card').forEach((el, i) => {
+        const cats = ['todos','futbol','running','gym','natacion','basket'];
+        el.classList.toggle('active', cats[i] === cat);
+      });
+      renderProducts();
+    }
+
+    function sortProducts(sort, btn) {
+      currentSort = sort;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderProducts();
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(i => i.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCart();
+      showToast('¡' + product.name + ' añadido al carrito!');
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      updateCart();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) removeFromCart(id);
+      else updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function updateCart() {
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+
+      const itemsEl = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        itemsEl.innerHTML = `
+          <div class="cart-empty">
+            <div class="cart-empty-icon">🛒</div>
+            <p>Tu carrito está vacío</p>
+          </div>`;
+      } else {
+        itemsEl.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-item-icon">${item.icon}</div>
+            <div class="cart-item-info">
+              <div class="cart-item-cat">${catLabel(item.category)}</div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+            </div>
+            <div class="cart-item-controls">
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                <span class="qty-num">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeFromCart(${item.id})">Eliminar</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function toggleCart() {
+      const overlay = document.getElementById('cart-overlay');
+      const drawer = document.getElementById('cart-drawer');
+      overlay.classList.toggle('open');
+      drawer.classList.toggle('open');
+    }
+
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      if (cart.length === 0) { showToast('El carrito está vacío'); return; }
+      showToast('¡Gracias por tu compra! 🎉');
+      cart = [];
+      updateCart();
+      toggleCart();
+    });
+
+    renderProducts();
+    updateCart();
+  </script>
+</body>
+</html>
